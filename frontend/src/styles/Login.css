@@ -1,12 +1,10 @@
 .mainContainer {
     align-content: center;
-    border: 1px solid #ff0000;
+    /* border: 1px solid #ff0000; */
     height: 99vh;
     width: 99vw;
-    /* align-content: center;
-    align-items: center;
-    align-self: center;
-    position: inherit; */
+    text-align: center;
+
 }
 .loginContainer {
     display: flex;
@@ -18,11 +16,10 @@
     left: 24%;    
     align-content: center;
     text-align: center;
-    /* display: flex; */
     
 }
 .loginContainer > form {
-    border: 1px solid green;
+    /* border: 1px solid green; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -30,9 +27,6 @@
     text-align: center;
     width: 50%;
     margin: 30px 0 30px 0;
-    /* height: 50%; */
-    /* position: sticky; */
-    /* top: 35%; */
 }
 .loginContainer > form  input {
     align-self: center;
@@ -50,10 +44,11 @@
     margin: 0 0 20px 0;
 
 } 
-/* .loginContainer span {
-    margin: 20px 0 0 0
-} */
 .loginContainer a {
     text-decoration: none;
     color: blue;
-} 
+}
+.signup {
+    color: blue;
+    font-weight: bolder;
+}

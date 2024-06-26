@@ -1,23 +1,22 @@
 import React, { useState } from 'react';
+import axios from 'axios'
 import "../styles/Appointment.css"
 
 const dentists = [
   { id: 1, name: 'Dr. Smith' },
   { id: 2, name: 'Dr. Johnson' },
   { id: 3, name: 'Dr. Williams' },
+  { id: 4, name: 'Dr. Williams' }
 ];
 
-const Appointment = () => {
+const Appointment = (onClickSave) => {
   const [selectedDentist, setSelectedDentist] = useState(null);
   const [selectedDate, setSelectedDate] = useState('');
   const [availableSlots, setAvailableSlots] = useState([]);
+  // const [remarks, setRemarks] = useState('');
 
-  // Function to simulate fetching available slots (replace with actual API call in real scenario)
   const fetchAvailableSlots = (dentistId, selectedDate) => {
-    // Simulating data fetch with setTimeout
     setTimeout(() => {
-      // Replace with actual logic to fetch available slots from backend
-      // For demonstration, we'll set some hardcoded slots for the selectedDate
       const slots = [
         { id: 1, time: '9:00 AM' },
         { id: 2, time: '10:00 AM' },
@@ -26,16 +25,14 @@ const Appointment = () => {
         { id: 5, time: '3:00 PM' },
       ];
       setAvailableSlots(slots);
-    }, 500); // Simulate delay for fetching data
+    }, 500); 
   };
 
-  // Handle selecting a dentist
   const handleDentistSelect = (dentist) => {
     setSelectedDentist(dentist);
-    setAvailableSlots([]); // Clear previous slots when selecting new dentist
+    setAvailableSlots([]); 
   };
 
-  // Handle date selection
   const handleDateSelect = (e) => {
     const selectedDate = e.target.value;
     setSelectedDate(selectedDate);
@@ -44,14 +41,29 @@ const Appointment = () => {
     }
   };
 
-  // Handle booking appointment
-  const handleSlotSelect = (slot) => {
+  const handleSlotSelect = async (slot) => {
+    let user = JSON.parse(sessionStorage.getItem('user'))
     console.log(`Appointment booked with ${selectedDentist.name} on ${selectedDate} at ${slot.time}`);
-    // Here you can implement logic to book appointment (send data to backend, etc.)
-    // Reset state after booking
-    setSelectedDentist(null);
-    setSelectedDate('');
-    setAvailableSlots([]);
+    const scheduleDetail = {
+      email: user.email,
+      dentist: selectedDentist.name,
+      date: selectedDate,
+      time: slot.time,
+      // remarks: remarks
+    }
+    console.log(scheduleDetail)
+    console.log(user.email,"sessionStorage.getItem('user').email")
+    const url = `http://localhost:3050/api/schedules/`
+    await axios.post(url,scheduleDetail).then(()=>{
+        console.log('saved')
+        alert('Saved')
+        onClickSave()
+        setSelectedDentist(null);
+        setSelectedDate('');
+        setAvailableSlots([]);
+        // setRemarks('');
+    })
+
   };
 
   return (
@@ -79,6 +91,14 @@ const Appointment = () => {
           />
         </div>
       )}
+      {/* {selectedDentist && selectedDate && (
+        <div>
+          <h3>Remarks:</h3>
+          <textarea onInput={setRemarks((e) => e.target.value)}></textarea>
+        </div>
+      )
+
+      } */}
       {selectedDentist && selectedDate && (
         <div className="available-slots">
           <h3>Available Slots for {selectedDentist.name} on {selectedDate}:</h3>
@@ -91,14 +111,6 @@ const Appointment = () => {
           </ul>
         </div>
       )}
-      {selectedDentist && selectedDate && availableSlots && (
-        <div>
-          <h3>Remarks:</h3>
-          <textarea ></textarea>
-        </div>
-      )
-
-      }
       
     </div>
   );

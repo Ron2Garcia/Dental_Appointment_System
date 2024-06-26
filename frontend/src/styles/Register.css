@@ -1,0 +1,37 @@
+/* .mainContainer {
+    width: 60%;
+
+} */
+.registerContainer {
+    width: 500px;    
+}
+.registerContainer > div{
+    align-content: center; 
+    align-self: center;
+    align-items: center;
+}
+.registerContainer > div > form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center; 
+    align-self: center;
+    align-items: center;
+    width: 100%;
+}
+.registerContainer > div > form input {
+    align-self: center;
+    margin: 0 0 10px 0;
+    width: 60%;
+    height: 30px;
+}
+.registerContainer > div> form button {
+    align-self: center;
+    width: 60%;
+    height: 30px;
+    background-color: rgb(93, 93, 231);
+    color: white;
+    font-weight: bolder;
+    margin: 0 0 20px 0;
+
+} 
